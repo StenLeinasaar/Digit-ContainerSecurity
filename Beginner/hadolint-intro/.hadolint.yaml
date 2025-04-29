@@ -1,0 +1,5 @@
+# Enable all rules by default, but override some
+ignored:
+  - DL3006  # allow latest tag for demo
+  - DL3018  # skip version pinning rule
+# You can add custom rules or disable others as needed
