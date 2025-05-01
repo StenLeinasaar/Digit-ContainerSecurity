@@ -1,0 +1,16 @@
+# Single-stage (naive) build
+FROM golang:1.21
+WORKDIR /app
+
+
+# Copy module file and ensure tidy (creates go.sum if missing)
+COPY go.mod ./
+RUN go mod tidy
+
+
+# Copy source and build
+COPY . .
+RUN go build -o app .
+
+# Final image contains builder toolchain + binary
+ENTRYPOINT ["/app/app"]

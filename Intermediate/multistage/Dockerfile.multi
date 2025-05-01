@@ -1,0 +1,18 @@
+# Stage 1: builder
+FROM golang:1.21 AS builder
+WORKDIR /app
+
+# Copy module file and tidy
+COPY go.mod ./
+RUN go mod tidy
+
+# Copy source and build
+COPY . .
+RUN go build -o app .
+
+# Stage 2: minimal runtime
+FROM scratch
+
+# Copy only the built binary
+COPY --from=builder /app/app /app
+ENTRYPOINT ["/app"]
