@@ -1,0 +1,18 @@
+# Start from a supported Alpine-based Node.js runtime
+FROM node:14-alpine
+
+# Create app directory
+WORKDIR /app
+
+# Copy only package manifest first (to leverage layer cache)
+COPY package.json ./
+
+# Install dependencies (we’re pinning to vulnerable versions)
+RUN npm install
+
+# Copy app source
+COPY server.js ./
+
+# Expose a simple web endpoint
+EXPOSE 3000
+CMD ["node", "server.js"]

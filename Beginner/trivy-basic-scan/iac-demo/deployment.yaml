@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trivy-vuln-app
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: vulnerable
+          image: nginx:alpine
+          securityContext:
+            privileged: true   # HIGH-level risk
+            allowPrivilegeEscalation: true
+          ports:
+            - containerPort: 80
